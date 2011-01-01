@@ -108,6 +108,36 @@ public class Uploader extends Command {
             FilteredRows filteredRows = engine.getAllFilteredRows();
             filteredRows.accept(project, createRowVisitor(project, values));
             
+            List<HashMap> stuff = new ArrayList<HashMap>();
+
+            for (Column col : project.columnModel.columns) {
+                columns.add(col.getName());
+            }
+
+            for (int num = 0; num < values.size(); num++) {
+              int y = 0;
+              String[] a = (String[]) values.get(num);
+              HashMap rowdata = new HashMap();
+              for (int x = 0; x < a.length; x++) {
+                rowdata.put(columns.get(x), a[x]);
+                y++;
+              }
+              stuff.add(rowdata);
+            }
+
+            HashMap bulkwrapper = new HashMap();
+            bulkwrapper.put("docs", stuff);
+            Gson gson = new Gson();
+            String jsondata = gson.toJson(bulkwrapper);
+            DefaultHttpClient httpclient = new DefaultHttpClient();
+            HttpPost httpost = new HttpPost("http://localhost:5984/tacos/_bulk_docs");
+            StringEntity se = new StringEntity(jsondata);
+            httpost.setEntity(se);
+            httpost.setHeader("Accept", "application/json");
+            httpost.setHeader("Content-type", "application/json");
+            ResponseHandler responseHandler = new BasicResponseHandler();
+            httpclient.execute(httpost, responseHandler);
+            
         } catch (Exception e) {
             respondException(response, e);
         } finally {
