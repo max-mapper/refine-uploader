@@ -1,0 +1,43 @@
+h1. Google Refine Uploader Extension
+
+This allows you to export datasets from "Google Refine":http://code.google.com/p/google-refine/ and post them as JSON to web servers! Intended for use with CouchDB
+
+**Work in progress!!** more docs soon
+
+h2. Hacking on the codez
+
+* Check out the Google refine source code
+* Go into the Refine base directory and run @ant@
+* Run @./refine@
+* Clone this repo into as the @extensions/uploader@ directory inside Google refine
+* In another Terminal window go into the @extensions/uploader@ directory and run @ant@
+
+Every time you change a file in @extensions/uploader@ and run @ant@ from that folder it will build the new extension and reload it in the running instance of Refine
+
+h3. Thanks, Chicago Tribune!
+
+This extension was based on the "Chicago Tribune's Stats Extension":https://github.com/newsapps/refine-stats for Google Refine.
+
+h4. License
+
+The MIT License
+
+Copyright (c) 2010 Max Ogden
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

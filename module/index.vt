@@ -1,0 +1,16 @@
+#*
+ * Access this page at the URL /extensions/uploader/
+ *#
+<html>
+  <head>
+    <title>Uploader Extension</title>
+  </head>
+  <body>
+    <h1>Uploader Extension</h1>
+    
+    <p>
+        Yo.
+    </p>
+  </body>
+</html>
+
