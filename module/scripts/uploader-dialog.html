@@ -1,9 +1,31 @@
-<div id="uploader-dialog" class="dialog-frame" style="width: 300px;">
-    <div class="dialog-header" bind="dialogHeader">Data Uploader</div>
-    <div class="dialog-body" bind="dialogBody">
-      hello
-    </div>
-    <div class="dialog-footer" bind="dialogFooter"><div class="grid-layout layout-normal layout-full">
-        <button class="button" bind="okButton" id="uploader-ok">Ok</button>
-    </div>
+<div class="dialog-frame" style="width: 900px;">
+  <div class="dialog-header" bind="dialogHeader">Data Upload</div>
+  <div class="dialog-body" bind="dialogBody">
+    <div class="grid-layout layout-normal layout-full"><table>
+      <tr>
+        <td style="vertical-align: top"><div class="grid-layout layout-tighter layout-full" bind="controls"><table>
+          <tr><td>Server URL:</td></tr>
+          <tr><td><div class="input-container"><input bind="serverInput" class="code" wrap="off" style="height:2em;" type="text" value="http://"></input></div></td></tr>
+          <tr><td>Bulk uploads an array of JSON objects representing your Refine project rows to a remote server via HTTP POST. Your server will have to know how to accept, parse and store JSON in the following format:</td></tr>
+          <tr><td>
+<pre>
+{
+  "docs": [
+    {"name": "barry", "type": "human"}, // first row
+    {"name": "carl",  "type": "human"}, // second row
+    {"name": "ethel", "type": "robot"}  // third row, etc...
+  ]
+}
+</pre>
+          </td></tr>
+        </table></div></td>
+      </tr>
+    </table></div>
+  </div>
+  <div class="dialog-footer" bind="dialogFooter"><div class="grid-layout layout-normal layout-full"><table><tr>
+    <td style="text-align: right;">
+      <button class="button" bind="uploadButton">Upload</button>
+      <button class="button" bind="cancelButton">Cancel</button>
+    </td>
+  </tr></table></div></div>
 </div>

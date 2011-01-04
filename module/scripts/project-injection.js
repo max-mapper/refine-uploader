@@ -1,8 +1,9 @@
-var upload = function() { 
+var upload = function(url) { 
   Refine.postProcess(
       "uploader",
       "uploader",
-      {},{},{},
+      params = { "url": url },
+      {},{},
       { 
           "onDone": function(response) {
               console.log(response);
@@ -11,7 +12,7 @@ var upload = function() {
   );
 }
 
-var showUploaderDialog = function() {
+ExporterManager.handlers.showUploaderDialog = function() {
   var dialog = $(DOM.loadHTML("uploader", "scripts/uploader-dialog.html"));
 
   var elmts = DOM.bind(dialog);
@@ -19,9 +20,16 @@ var showUploaderDialog = function() {
 
   var level = DialogSystem.showDialog(dialog);
 
-  elmts.okButton.click(function() {
-      DialogSystem.dismissUntil(level - 1);
-  }); 
+  elmts.uploadButton.click(function() {
+    var url = elmts.serverInput[0].value;
+    upload(url);
+    DialogSystem.dismissUntil(level - 1);
+  });
+  
+  elmts.cancelButton.click(function() {
+    DialogSystem.dismissUntil(level - 1);
+  });
+  
 };
 
 MenuSystem.insertAfter(
@@ -30,7 +38,7 @@ MenuSystem.insertAfter(
     {
       "id": "uploader/uploader",
       "label": "Upload...",
-      "click": showUploaderDialog
+      "click": function() { ExporterManager.handlers.showUploaderDialog(); }
     }
 );
 

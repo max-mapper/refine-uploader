@@ -130,13 +130,19 @@ public class Uploader extends Command {
             Gson gson = new Gson();
             String jsondata = gson.toJson(bulkwrapper);
             DefaultHttpClient httpclient = new DefaultHttpClient();
-            HttpPost httpost = new HttpPost("http://localhost:5984/tacos/_bulk_docs");
+            HttpPost httpost = new HttpPost(request.getParameter("url"));
             StringEntity se = new StringEntity(jsondata);
             httpost.setEntity(se);
             httpost.setHeader("Accept", "application/json");
             httpost.setHeader("Content-type", "application/json");
             ResponseHandler responseHandler = new BasicResponseHandler();
             httpclient.execute(httpost, responseHandler);
+            
+            JSONWriter writer = new JSONWriter(response.getWriter());
+            writer.object();
+            writer.key("ok");
+            writer.value("true");
+            writer.endObject();
             
         } catch (Exception e) {
             respondException(response, e);
