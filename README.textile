@@ -4,6 +4,14 @@ This allows you to export datasets from "Google Refine":http://code.google.com/p
 
 **Work in progress!!** more docs soon
 
+h2. Visual example:
+
+Adds this dialog to Google Refine's interface:
+!http://i.imgur.com/lM2Sj.png!
+
+Which then uploads data to the server of your choice! In this case CouchDB:
+!http://i.imgur.com/0yMIK.png!
+
 h2. Hacking on the codez
 
 * Check out the Google refine source code
