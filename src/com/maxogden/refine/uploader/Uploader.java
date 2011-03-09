@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.json.JSONWriter;
 import com.google.refine.commands.Command;
 import com.google.refine.ProjectManager;
@@ -23,8 +24,6 @@ import com.google.refine.browsing.Engine;
 import com.google.refine.browsing.FilteredRows;
 import com.google.refine.browsing.RowVisitor;
 import com.google.refine.util.ParsingUtilities;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
@@ -108,7 +107,7 @@ public class Uploader extends Command {
             FilteredRows filteredRows = engine.getAllFilteredRows();
             filteredRows.accept(project, createRowVisitor(project, values));
             
-            List<HashMap> stuff = new ArrayList<HashMap>();
+            JSONArray stuff = new JSONArray();
 
             for (Column col : project.columnModel.columns) {
                 columns.add(col.getName());
@@ -117,18 +116,25 @@ public class Uploader extends Command {
             for (int num = 0; num < values.size(); num++) {
               int y = 0;
               String[] a = (String[]) values.get(num);
-              HashMap rowdata = new HashMap();
+              JSONObject rowdata = new JSONObject();
               for (int x = 0; x < a.length; x++) {
-                rowdata.put(columns.get(x), a[x]);
+                if(a[x] instanceof String) {
+                  if(a[x].contains("{\\\"")) {
+                    JSONObject j;
+                    j = new JSONObject(a[x].replace("\\\"", "\""));
+                    rowdata.put(columns.get(x), j);
+                  } else {
+                    rowdata.put(columns.get(x), a[x]);
+                  }
+                }
                 y++;
               }
-              stuff.add(rowdata);
+              stuff.put(rowdata);
             }
 
-            HashMap bulkwrapper = new HashMap();
+            JSONObject bulkwrapper = new JSONObject();
             bulkwrapper.put("docs", stuff);
-            Gson gson = new Gson();
-            String jsondata = gson.toJson(bulkwrapper);
+            String jsondata = bulkwrapper.toString();
             DefaultHttpClient httpclient = new DefaultHttpClient();
             HttpPost httpost = new HttpPost(request.getParameter("url"));
             StringEntity se = new StringEntity(jsondata);
