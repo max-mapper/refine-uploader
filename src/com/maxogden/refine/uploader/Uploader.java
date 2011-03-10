@@ -110,19 +110,25 @@ public class Uploader extends Command {
             JSONArray stuff = new JSONArray();
 
             for (Column col : project.columnModel.columns) {
-                columns.add(col.getName());
+              columns.add(col.getName());
             }
-
+            
             for (int num = 0; num < values.size(); num++) {
               int y = 0;
               String[] a = (String[]) values.get(num);
               JSONObject rowdata = new JSONObject();
               for (int x = 0; x < a.length; x++) {
                 if(a[x] instanceof String) {
-                  if(a[x].contains("{\\\"")) {
-                    JSONObject j;
-                    j = new JSONObject(a[x].replace("\\\"", "\""));
-                    rowdata.put(columns.get(x), j);
+                  JSONObject j; 
+                  if(a[x].contains("{")) {
+                    try {
+                      String data = a[x].replace("\\\"","\"");
+                      j = new JSONObject(data);
+                      rowdata.put(columns.get(x), j);
+                    } catch (Exception e) {
+                      System.out.println("not a JSONObject: " + e.toString());
+                      rowdata.put(columns.get(x), a[x]);
+                    }                    
                   } else {
                     rowdata.put(columns.get(x), a[x]);
                   }
@@ -131,9 +137,10 @@ public class Uploader extends Command {
               }
               stuff.put(rowdata);
             }
-
+            
             JSONObject bulkwrapper = new JSONObject();
             bulkwrapper.put("docs", stuff);
+            
             String jsondata = bulkwrapper.toString();
             DefaultHttpClient httpclient = new DefaultHttpClient();
             HttpPost httpost = new HttpPost(request.getParameter("url"));
