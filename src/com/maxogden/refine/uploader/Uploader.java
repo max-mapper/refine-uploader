@@ -119,11 +119,11 @@ public class Uploader extends Command {
               JSONObject rowdata = new JSONObject();
               for (int x = 0; x < a.length; x++) {
                 if(a[x] instanceof String) {
-                  JSONObject j; 
-                  if(a[x].contains("{")) {
+                  
+                  if(a[x].charAt(0) == "{".charAt(0) && a[x].charAt(a[x].length() - 1) == "}".charAt(0)) {
                     try {
-                      String data = a[x].replace("\\\"","\"");
-                      j = new JSONObject(data);
+                      JSONObject j; 
+                      j = new JSONObject(a[x]);
                       rowdata.put(columns.get(x), j);
                     } catch (Exception e) {
                       System.out.println("not a JSONObject: " + e.toString());
