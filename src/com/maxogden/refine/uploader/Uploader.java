@@ -119,8 +119,7 @@ public class Uploader extends Command {
               JSONObject rowdata = new JSONObject();
               for (int x = 0; x < a.length; x++) {
                 if(a[x] instanceof String) {
-                  
-                  if(a[x].charAt(0) == "{".charAt(0) && a[x].charAt(a[x].length() - 1) == "}".charAt(0)) {
+                  if(a[x].length() > 0 && a[x].charAt(0) == "{".charAt(0) && a[x].charAt(a[x].length() - 1) == "}".charAt(0)) {
                     try {
                       JSONObject j; 
                       j = new JSONObject(a[x]);
