@@ -143,7 +143,7 @@ public class Uploader extends Command {
             String jsondata = bulkwrapper.toString();
             DefaultHttpClient httpclient = new DefaultHttpClient();
             HttpPost httpost = new HttpPost(request.getParameter("url"));
-            StringEntity se = new StringEntity(jsondata);
+            StringEntity se = new StringEntity(jsondata, "UTF-8");
             httpost.setEntity(se);
             httpost.setHeader("Accept", "application/json");
             httpost.setHeader("Content-type", "application/json");
