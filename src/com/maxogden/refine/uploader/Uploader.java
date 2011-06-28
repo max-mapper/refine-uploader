@@ -119,18 +119,21 @@ public class Uploader extends Command {
               JSONObject rowdata = new JSONObject();
               for (int x = 0; x < a.length; x++) {
                 if(a[x] instanceof String) {
-                  if(a[x].length() > 0 && a[x].charAt(0) == "{".charAt(0) && a[x].charAt(a[x].length() - 1) == "}".charAt(0)) {
-                    try {
+                  try {
+                    if(a[x].length() > 0 && a[x].charAt(0) == "{".charAt(0) && a[x].charAt(a[x].length() - 1) == "}".charAt(0)) {
                       JSONObject j; 
                       j = new JSONObject(a[x]);
                       rowdata.put(columns.get(x), j);
-                    } catch (Exception e) {
-                      System.out.println("not a JSONObject: " + e.toString());
-                      rowdata.put(columns.get(x), a[x]);
+                    }
+                    if(a[x].length() > 0 && a[x].charAt(0) == "[".charAt(0) && a[x].charAt(a[x].length() - 1) == "]".charAt(0)) {
+                      JSONArray j; 
+                      j = new JSONArray(a[x]);
+                      rowdata.put(columns.get(x), j);
                     }                    
-                  } else {
+                  } catch (Exception e) {
+                    System.out.println("not a JSONObject: " + e.toString());
                     rowdata.put(columns.get(x), a[x]);
-                  }
+                  }                    
                 }
                 y++;
               }
